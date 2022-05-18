@@ -13,6 +13,14 @@ export default async function handler(
 	const { method, body, query } = req;
 
 	switch (method) {
+		case "POST":
+			const created = await prisma.category.create({
+				data: {
+					...body,
+				},
+			});
+
+			return res.status(201).json(created);
 		default:
 			const category = await prisma.category.findUnique({
 				where: {
