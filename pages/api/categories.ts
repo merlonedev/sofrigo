@@ -7,9 +7,14 @@ type Categories = {
 	name: string;
 }[];
 
+type Created = {
+	id: number
+	name: string
+}
+
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Categories>
+	res: NextApiResponse<Categories | Created>
 ) {
 	const { method, body } = req;
 
