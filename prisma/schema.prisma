@@ -9,3 +9,26 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  Transactions Transactions[]
+}
+
+model Type {
+  id           Int            @id @default(autoincrement())
+  name         String
+  Transactions Transactions[]
+}
+
+model Transactions {
+  id          Int      @id @default(autoincrement())
+  value       Decimal
+  description String
+  date        DateTime @default(now())
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  type        Type     @relation(fields: [typeId], references: [id])
+  typeId      Int
+}
