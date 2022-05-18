@@ -21,6 +21,17 @@ export default async function handler(
 			});
 
 			return res.status(201).json(created);
+		case "PUT":
+			const edited = await prisma.category.update({
+				where: {
+					id: Number(query.id),
+				},
+				data: {
+					...body,
+				},
+			});
+
+			return res.status(200).json(edited);
 		default:
 			const category = await prisma.category.findUnique({
 				where: {
