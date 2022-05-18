@@ -8,9 +8,22 @@ type Categories = {
 }[];
 
 export default async function handler(
-	_req: NextApiRequest,
+	req: NextApiRequest,
 	res: NextApiResponse<Categories>
 ) {
-	const categories = await prisma.category.findMany({});
-	res.status(200).json(categories);
+	const { method, body } = req;
+
+	switch (method) {
+		case "POST":
+			const created = await prisma.category.create({
+				data: {
+					...body,
+				},
+			});
+
+			return res.status(201).json(created);
+		default:
+			const categories = await prisma.category.findMany({});
+			res.status(200).json(categories);
+	}
 }
