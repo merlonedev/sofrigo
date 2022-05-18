@@ -32,6 +32,14 @@ export default async function handler(
 			});
 
 			return res.status(200).json(edited);
+		case "DELETE":
+			const deleted = await prisma.category.delete({
+				where: {
+					id: Number(query.id),
+				},
+			});
+
+			return res.status(200).json(deleted);
 		default:
 			const category = await prisma.category.findUnique({
 				where: {
